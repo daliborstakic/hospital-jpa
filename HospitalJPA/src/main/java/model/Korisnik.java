@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -25,10 +26,18 @@ public class Korisnik implements Serializable {
 
 	private String username;
 
+	//bi-directional many-to-one association to Doktor
+	@OneToMany(mappedBy="korisnik")
+	private List<Doktor> doktors;
+
 	//bi-directional many-to-one association to Uloga
 	@ManyToOne
 	@JoinColumn(name="idUloga")
 	private Uloga uloga;
+
+	//bi-directional many-to-one association to Pacijent
+	@OneToMany(mappedBy="korisnik")
+	private List<Pacijent> pacijents;
 
 	public Korisnik() {
 	}
@@ -73,12 +82,56 @@ public class Korisnik implements Serializable {
 		this.username = username;
 	}
 
+	public List<Doktor> getDoktors() {
+		return this.doktors;
+	}
+
+	public void setDoktors(List<Doktor> doktors) {
+		this.doktors = doktors;
+	}
+
+	public Doktor addDoktor(Doktor doktor) {
+		getDoktors().add(doktor);
+		doktor.setKorisnik(this);
+
+		return doktor;
+	}
+
+	public Doktor removeDoktor(Doktor doktor) {
+		getDoktors().remove(doktor);
+		doktor.setKorisnik(null);
+
+		return doktor;
+	}
+
 	public Uloga getUloga() {
 		return this.uloga;
 	}
 
 	public void setUloga(Uloga uloga) {
 		this.uloga = uloga;
+	}
+
+	public List<Pacijent> getPacijents() {
+		return this.pacijents;
+	}
+
+	public void setPacijents(List<Pacijent> pacijents) {
+		this.pacijents = pacijents;
+	}
+
+	public Pacijent addPacijent(Pacijent pacijent) {
+		getPacijents().add(pacijent);
+		pacijent.setKorisnik(this);
+
+		return pacijent;
+	}
+
+	public Pacijent removePacijent(Pacijent pacijent) {
+		getPacijents().remove(pacijent);
+		pacijent.setKorisnik(null);
+
+		return pacijent;
 	}
 
 }

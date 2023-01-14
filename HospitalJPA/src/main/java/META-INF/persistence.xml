@@ -13,6 +13,7 @@
 		<class>model.Specijalizacija</class>
 		<class>model.Tehnicar</class>
 		<class>model.Uloga</class>
+		<class>model.Zakazivanje</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hospitalDB"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

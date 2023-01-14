@@ -27,6 +27,11 @@ public class Doktor implements Serializable {
 	@JoinColumn(name="idDepartman")
 	private Departman departman;
 
+	//bi-directional many-to-one association to Korisnik
+	@ManyToOne
+	@JoinColumn(name="idKorisnik")
+	private Korisnik korisnik;
+
 	//bi-directional many-to-one association to Specijalizacija
 	@ManyToOne
 	@JoinColumn(name="idSpecijalizacija")
@@ -35,6 +40,10 @@ public class Doktor implements Serializable {
 	//bi-directional many-to-one association to Pregled
 	@OneToMany(mappedBy="doktor")
 	private List<Pregled> pregleds;
+
+	//bi-directional many-to-one association to Zakazivanje
+	@OneToMany(mappedBy="doktor")
+	private List<Zakazivanje> zakazivanjes;
 
 	public Doktor() {
 	}
@@ -71,6 +80,14 @@ public class Doktor implements Serializable {
 		this.departman = departman;
 	}
 
+	public Korisnik getKorisnik() {
+		return this.korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
+	}
+
 	public Specijalizacija getSpecijalizacija() {
 		return this.specijalizacija;
 	}
@@ -99,6 +116,28 @@ public class Doktor implements Serializable {
 		pregled.setDoktor(null);
 
 		return pregled;
+	}
+
+	public List<Zakazivanje> getZakazivanjes() {
+		return this.zakazivanjes;
+	}
+
+	public void setZakazivanjes(List<Zakazivanje> zakazivanjes) {
+		this.zakazivanjes = zakazivanjes;
+	}
+
+	public Zakazivanje addZakazivanje(Zakazivanje zakazivanje) {
+		getZakazivanjes().add(zakazivanje);
+		zakazivanje.setDoktor(this);
+
+		return zakazivanje;
+	}
+
+	public Zakazivanje removeZakazivanje(Zakazivanje zakazivanje) {
+		getZakazivanjes().remove(zakazivanje);
+		zakazivanje.setDoktor(null);
+
+		return zakazivanje;
 	}
 
 }

@@ -22,9 +22,18 @@ public class Pacijent implements Serializable {
 
 	private String prezime;
 
+	//bi-directional many-to-one association to Korisnik
+	@ManyToOne
+	@JoinColumn(name="idKorisnik")
+	private Korisnik korisnik;
+
 	//bi-directional many-to-one association to Pregled
 	@OneToMany(mappedBy="pacijent")
 	private List<Pregled> pregleds;
+
+	//bi-directional many-to-one association to Zakazivanje
+	@OneToMany(mappedBy="pacijent")
+	private List<Zakazivanje> zakazivanjes;
 
 	public Pacijent() {
 	}
@@ -53,6 +62,14 @@ public class Pacijent implements Serializable {
 		this.prezime = prezime;
 	}
 
+	public Korisnik getKorisnik() {
+		return this.korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
+	}
+
 	public List<Pregled> getPregleds() {
 		return this.pregleds;
 	}
@@ -73,6 +90,28 @@ public class Pacijent implements Serializable {
 		pregled.setPacijent(null);
 
 		return pregled;
+	}
+
+	public List<Zakazivanje> getZakazivanjes() {
+		return this.zakazivanjes;
+	}
+
+	public void setZakazivanjes(List<Zakazivanje> zakazivanjes) {
+		this.zakazivanjes = zakazivanjes;
+	}
+
+	public Zakazivanje addZakazivanje(Zakazivanje zakazivanje) {
+		getZakazivanjes().add(zakazivanje);
+		zakazivanje.setPacijent(this);
+
+		return zakazivanje;
+	}
+
+	public Zakazivanje removeZakazivanje(Zakazivanje zakazivanje) {
+		getZakazivanjes().remove(zakazivanje);
+		zakazivanje.setPacijent(null);
+
+		return zakazivanje;
 	}
 
 }
