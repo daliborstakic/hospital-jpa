@@ -2,24 +2,20 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
- * The persistent class for the zakazivanje database table.
+ * The persistent class for the omiljeni database table.
  * 
  */
 @Entity
-@NamedQuery(name="Zakazivanje.findAll", query="SELECT z FROM Zakazivanje z")
-public class Zakazivanje implements Serializable {
+@NamedQuery(name="Omiljeni.findAll", query="SELECT o FROM Omiljeni o")
+public class Omiljeni implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idZakazivanje;
-
-	@Temporal(TemporalType.DATE)
-	private Date datum;
+	private int idOmiljeni;
 
 	//bi-directional many-to-one association to Doktor
 	@ManyToOne
@@ -31,23 +27,15 @@ public class Zakazivanje implements Serializable {
 	@JoinColumn(name="idPacijent")
 	private Pacijent pacijent;
 
-	public Zakazivanje() {
+	public Omiljeni() {
 	}
 
-	public int getIdZakazivanje() {
-		return this.idZakazivanje;
+	public int getIdOmiljeni() {
+		return this.idOmiljeni;
 	}
 
-	public void setIdZakazivanje(int idZakazivanje) {
-		this.idZakazivanje = idZakazivanje;
-	}
-
-	public Date getDatum() {
-		return this.datum;
-	}
-
-	public void setDatum(Date datum) {
-		this.datum = datum;
+	public void setIdOmiljeni(int idOmiljeni) {
+		this.idOmiljeni = idOmiljeni;
 	}
 
 	public Doktor getDoktor() {
