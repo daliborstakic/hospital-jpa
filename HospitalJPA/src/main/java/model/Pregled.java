@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -16,6 +17,9 @@ public class Pregled implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idPregled;
+
+	@Temporal(TemporalType.DATE)
+	private Date datum;
 
 	//bi-directional many-to-one association to Dijagnoza
 	@ManyToOne
@@ -37,6 +41,11 @@ public class Pregled implements Serializable {
 	@JoinColumn(name="idRecept")
 	private Recept recept;
 
+	//bi-directional many-to-one association to Tehnicar
+	@ManyToOne
+	@JoinColumn(name="idTehnicar")
+	private Tehnicar tehnicar;
+
 	public Pregled() {
 	}
 
@@ -46,6 +55,14 @@ public class Pregled implements Serializable {
 
 	public void setIdPregled(int idPregled) {
 		this.idPregled = idPregled;
+	}
+
+	public Date getDatum() {
+		return this.datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 
 	public Dijagnoza getDijagnoza() {
@@ -78,6 +95,14 @@ public class Pregled implements Serializable {
 
 	public void setRecept(Recept recept) {
 		this.recept = recept;
+	}
+
+	public Tehnicar getTehnicar() {
+		return this.tehnicar;
+	}
+
+	public void setTehnicar(Tehnicar tehnicar) {
+		this.tehnicar = tehnicar;
 	}
 
 }

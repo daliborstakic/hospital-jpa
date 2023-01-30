@@ -21,6 +21,8 @@ public class Zakazivanje implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date datum;
 
+	private Boolean postojiPregled;
+
 	//bi-directional many-to-one association to Doktor
 	@ManyToOne
 	@JoinColumn(name="idDoktor")
@@ -48,6 +50,14 @@ public class Zakazivanje implements Serializable {
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
+	}
+
+	public Boolean getPostojiPregled() {
+		return this.postojiPregled;
+	}
+
+	public void setPostojiPregled(Boolean postojiPregled) {
+		this.postojiPregled = postojiPregled;
 	}
 
 	public Doktor getDoktor() {

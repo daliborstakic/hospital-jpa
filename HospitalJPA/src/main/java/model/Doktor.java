@@ -4,49 +4,54 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
+
 /**
  * The persistent class for the doktor database table.
  * 
  */
 @Entity
-@NamedQuery(name = "Doktor.findAll", query = "SELECT d FROM Doktor d")
+@NamedQuery(name="Doktor.findAll", query="SELECT d FROM Doktor d")
 public class Doktor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idDoktor;
 
 	private String ime;
 
 	private String prezime;
 
-	// bi-directional many-to-one association to Departman
+	//bi-directional many-to-one association to Departman
 	@ManyToOne
-	@JoinColumn(name = "idDepartman")
+	@JoinColumn(name="idDepartman")
 	private Departman departman;
 
-	// bi-directional many-to-one association to Korisnik
+	//bi-directional many-to-one association to Korisnik
 	@ManyToOne
-	@JoinColumn(name = "idKorisnik")
+	@JoinColumn(name="idKorisnik")
 	private Korisnik korisnik;
 
-	// bi-directional many-to-one association to Specijalizacija
+	//bi-directional many-to-one association to Specijalizacija
 	@ManyToOne
-	@JoinColumn(name = "idSpecijalizacija")
+	@JoinColumn(name="idSpecijalizacija")
 	private Specijalizacija specijalizacija;
 
-	// bi-directional many-to-one association to Pregled
-	@OneToMany(mappedBy = "doktor")
+	//bi-directional many-to-one association to Obavestenje
+	@OneToMany(mappedBy="doktor")
+	private List<Obavestenje> obavestenjes;
+
+	//bi-directional many-to-one association to Omiljeni
+	@OneToMany(mappedBy="doktor")
+	private List<Omiljeni> omiljenis;
+
+	//bi-directional many-to-one association to Pregled
+	@OneToMany(mappedBy="doktor")
 	private List<Pregled> pregleds;
 
-	// bi-directional many-to-one association to Zakazivanje
-	@OneToMany(mappedBy = "doktor")
+	//bi-directional many-to-one association to Zakazivanje
+	@OneToMany(mappedBy="doktor")
 	private List<Zakazivanje> zakazivanjes;
-
-	// bi-directional many-to-one association to Omiljeni
-	@OneToMany(mappedBy = "doktor")
-	private List<Omiljeni> omiljenis;
 
 	public Doktor() {
 	}
@@ -99,6 +104,50 @@ public class Doktor implements Serializable {
 		this.specijalizacija = specijalizacija;
 	}
 
+	public List<Obavestenje> getObavestenjes() {
+		return this.obavestenjes;
+	}
+
+	public void setObavestenjes(List<Obavestenje> obavestenjes) {
+		this.obavestenjes = obavestenjes;
+	}
+
+	public Obavestenje addObavestenje(Obavestenje obavestenje) {
+		getObavestenjes().add(obavestenje);
+		obavestenje.setDoktor(this);
+
+		return obavestenje;
+	}
+
+	public Obavestenje removeObavestenje(Obavestenje obavestenje) {
+		getObavestenjes().remove(obavestenje);
+		obavestenje.setDoktor(null);
+
+		return obavestenje;
+	}
+
+	public List<Omiljeni> getOmiljenis() {
+		return this.omiljenis;
+	}
+
+	public void setOmiljenis(List<Omiljeni> omiljenis) {
+		this.omiljenis = omiljenis;
+	}
+
+	public Omiljeni addOmiljeni(Omiljeni omiljeni) {
+		getOmiljenis().add(omiljeni);
+		omiljeni.setDoktor(this);
+
+		return omiljeni;
+	}
+
+	public Omiljeni removeOmiljeni(Omiljeni omiljeni) {
+		getOmiljenis().remove(omiljeni);
+		omiljeni.setDoktor(null);
+
+		return omiljeni;
+	}
+
 	public List<Pregled> getPregleds() {
 		return this.pregleds;
 	}
@@ -141,28 +190,6 @@ public class Doktor implements Serializable {
 		zakazivanje.setDoktor(null);
 
 		return zakazivanje;
-	}
-
-	public List<Omiljeni> getOmiljenis() {
-		return this.omiljenis;
-	}
-
-	public void setOmiljenis(List<Omiljeni> omiljenis) {
-		this.omiljenis = omiljenis;
-	}
-
-	public Omiljeni addOmiljeni(Omiljeni omiljeni) {
-		getOmiljenis().add(omiljeni);
-		omiljeni.setDoktor(this);
-
-		return omiljeni;
-	}
-
-	public Omiljeni removeOmiljeni(Omiljeni omiljeni) {
-		getOmiljenis().remove(omiljeni);
-		omiljeni.setDoktor(null);
-
-		return omiljeni;
 	}
 
 }

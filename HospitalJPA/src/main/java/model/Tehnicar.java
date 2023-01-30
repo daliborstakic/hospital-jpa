@@ -2,28 +2,32 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
+import java.util.List;
 
 /**
  * The persistent class for the tehnicar database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tehnicar.findAll", query="SELECT t FROM Tehnicar t")
+@NamedQuery(name = "Tehnicar.findAll", query = "SELECT t FROM Tehnicar t")
 public class Tehnicar implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idTehnicar;
 
 	private String ime;
 
 	private String prezime;
 
-	//bi-directional many-to-one association to Departman
+	// bi-directional many-to-one association to Pregled
+	@OneToMany(mappedBy = "tehnicar")
+	private List<Pregled> pregleds;
+
+	// bi-directional many-to-one association to Departman
 	@ManyToOne
-	@JoinColumn(name="idDepartman")
+	@JoinColumn(name = "idDepartman")
 	private Departman departman;
 
 	public Tehnicar() {
@@ -51,6 +55,32 @@ public class Tehnicar implements Serializable {
 
 	public void setPrezime(String prezime) {
 		this.prezime = prezime;
+	}
+
+	public String punoIme() {
+		return this.ime + " " + this.prezime;
+	}
+
+	public List<Pregled> getPregleds() {
+		return this.pregleds;
+	}
+
+	public void setPregleds(List<Pregled> pregleds) {
+		this.pregleds = pregleds;
+	}
+
+	public Pregled addPregled(Pregled pregled) {
+		getPregleds().add(pregled);
+		pregled.setTehnicar(this);
+
+		return pregled;
+	}
+
+	public Pregled removePregled(Pregled pregled) {
+		getPregleds().remove(pregled);
+		pregled.setTehnicar(null);
+
+		return pregled;
 	}
 
 	public Departman getDepartman() {

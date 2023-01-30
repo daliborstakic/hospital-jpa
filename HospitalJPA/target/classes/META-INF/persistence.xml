@@ -6,6 +6,7 @@
 		<class>model.Doktor</class>
 		<class>model.Korisnik</class>
 		<class>model.Lek</class>
+		<class>model.Obavestenje</class>
 		<class>model.Omiljeni</class>
 		<class>model.Pacijent</class>
 		<class>model.Pregled</class>
